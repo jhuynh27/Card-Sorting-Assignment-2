@@ -1,8 +1,8 @@
 /**
- * Patrick Riley
+ * Justin Huynh
  * CS 876 
  * Assignment 2
- * 10/8/25
+ * 10/24/25
  */
 public class CardComparatorBySuit {
 
