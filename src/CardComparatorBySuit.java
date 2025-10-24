@@ -4,6 +4,13 @@
  * Assignment 2
  * 10/24/25
  */
-public class CardComparatorBySuit {
+ 
+import java.util.Comparator;
+ 
+public class CardComparatorBySuit implements Comparator<Card> {
+
+   public int compare(Card card1, Card card2) {
+         return card1.getSuitInt() - card2.getSuitInt();
+   }
 
 }
