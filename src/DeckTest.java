@@ -29,7 +29,7 @@ public class DeckTest {
 	}
    
    @Test
-   public void testShufffle() {
+   public void testShuffle() {
       Deck deck1 = new Deck(true);
       Deck deck2 = new Deck(true);
       deck2.shuffle();
@@ -57,7 +57,7 @@ public class DeckTest {
       Deck deck = new Deck(false);
       Deck deck2 = new Deck(true);
       deck.selectionSort();
-      assertEquals(deck, deck2);
+      assertTrue(deck.equals(deck2));
    }
    
    @Test
@@ -65,7 +65,7 @@ public class DeckTest {
       Deck deck = new Deck(false);
       Deck deck2 = new Deck(true);
       deck.mergeSort();
-      assertEquals(deck, deck2);
+      assertTrue(deck.equals(deck2));
    }
    
 }

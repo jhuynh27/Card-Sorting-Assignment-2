@@ -13,8 +13,8 @@ public class CardTest {
     @Test
     public void testStringtoStringConstructor() {
       Card card = new Card("Spades", "Two");
-      assertEquals("Spades", card.getSuitInt());
-      assertEquals(3, card.getRank());
+      assertEquals("Spades", card.getSuit());
+      assertEquals(2, card.getRank());
     }
     
     @Test
@@ -25,11 +25,11 @@ public class CardTest {
       assertEquals(12, card.getRank());
     }
     
-    @test
+    @Test
     public void testIntToStringConstructor() {
       Card card = new Card(1, "Jack");
       assertEquals("Diamonds", card.getSuit());
-      assertEquals("Jack", card.getRank());
+      assertEquals(11, card.getRank());
     }
     
     @Test
@@ -88,14 +88,14 @@ public class CardTest {
     public void testCompareToDifferentSuits() {
       Card card1 = new Card("Hearts", "Queen");
       Card card2 = new Card("Spades", "Queen");
-      assertEquals(card1.compareTo(card2) < 0);
+      assertTrue(card1.compareTo(card2) < 0);
     }
     
     @Test
     public void testCompareToDifferentRanks() {
       Card card1 = new Card("Spades", "Six");
       Card card2 = new Card("Spades", "Seven");
-      assertEquals(card1.compareTo(card2) < 0);
+      assertTrue(card1.compareTo(card2) < 0);
     }
     
     @Test

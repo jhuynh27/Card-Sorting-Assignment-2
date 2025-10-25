@@ -1,17 +1,21 @@
 /**
- * Justin Huynh
- * CS 876 
- * Assignment 2
- * 10/24/25
  * 
- * This class represents a Deck of cards. 
+ * This class represents a Deck of cards. It uses the Card class to create a deck of 52 cards.
+ *
+ * @author Justin Huynh
  */
  
 public class Deck {
-
+  /**
+   * Creates two private fields
+   * Array of Card objects representing a deck of cards
+   * Index of the top card in the deck
+   */
    private Card[] cards;
    private int topCard;
-   
+  /**
+   * Default constructor with 52 cards
+   */
    public Deck() {
       cards = new Card[52];
       topCard = 51;
@@ -25,16 +29,10 @@ public class Deck {
       }
       
    }
-   
-   public void shuffle() {
-      for (int i = topCard; i > 0; i--) {
-         Card temp = cards[i];
-         int random = (int) (Math.random() * (i + 1)); // finds random value from the topCard (i) and 0
-         cards[i] = cards[random];
-         cards[random] = temp; // swaps value of topCard (i) and random value
-      }
-   }
-   
+  /**
+   * Creates a deck of card that is either sorted or unsorted.
+   * @param isSorted creates a sorted deck if true, if false the deck is shuffled.
+   */
    public Deck(boolean isSorted) {
       if (isSorted == true) {
          cards = new Card[52];
@@ -63,7 +61,10 @@ public class Deck {
       }
    
    }
-   
+  /**
+   * Creates a copy of another given deck.
+   * @param other the deck that is copied.
+   */
    public Deck(Deck other) {
       this.topCard = other.topCard;
       this.cards = new Card[other.cards.length];
@@ -71,7 +72,24 @@ public class Deck {
          this.cards[i] = new Card(other.cards[i]);
       }
    }
+  /**
+   * Shuffles a deck, rearranging cards currently in the deck
+   * Shuffles cards ranging from 0 to the topCard in the deck
+   */
+   public void shuffle() {
+      for (int i = topCard; i > 0; i--) {
+         Card temp = cards[i];
+         int random = (int) (Math.random() * (i + 1)); // finds random value from the topCard (i) and 0
+         cards[i] = cards[random];
+         cards[random] = temp; // swaps value of topCard (i) and random value
+      }
+   }
    
+  /**
+   * If the deck is full, it is returns the deck with suits in a different column, each separated by a tab
+   * If not, it returns the remaining cards one per line, each numbered from 1 to the last card in the deck
+   * @return a string representation of the deck
+   */
    @Override
    public String toString() {
       String result = "";
@@ -92,10 +110,14 @@ public class Deck {
       }
       return result;
    } 
-   
+  /**
+   * Checks if two decks are equal by checking number of cards remaining
+   * @param other the other deck to compare against.
+   * @return true if equivalent and false otherwise
+   */
    @Override
    public boolean equals(Object other) {
-      Deck compare = (Deck) other   ;
+      Deck compare = (Deck) other;
       
       if (this.topCard != compare.topCard) {
          return false;
@@ -108,7 +130,12 @@ public class Deck {
       }
       return true;
    }
-   
+  /**
+   * Deals a specified number of hands from the top of the deck.
+   * @param hands the total numbers of hands dealt
+   * @param cardsPerHand the total number of cards given to each hand
+   * @return an array of deck objects with the dealt cards; returns null if not enough cards
+   */
    public Deck[] deal(int hands, int cardsPerHand) {
    
       int cardsNeeded = hands * cardsPerHand;
@@ -130,7 +157,11 @@ public class Deck {
       }
       return dealHands;
    }
-   
+  /**
+   * Picks a random card and removes it from the deck.
+   * The cards above the random card are shifted down to fill the gap in the array.
+   * @return the randomly selected and removed card.
+   */
    public Card pick() {
       int random = (int) (Math.random() * topCard + 1); // generate random number from cards
       Card randomCard = cards[random]; // sets
@@ -141,7 +172,10 @@ public class Deck {
       topCard--; // removes card from deck
       return randomCard; // returns card picked
    }
-   
+  /**
+   * Sorts a deck of cards using Selection Sort
+   * Sorted in ascending order, as defined by compareTo
+   */
    public void selectionSort() {
       for (int i = 0; i < topCard; i++) { 
          int min = i;
@@ -159,11 +193,20 @@ public class Deck {
          cards[min] = temp;
       }
    }
-   
+  /**
+   * Sorts a deck using Merge Sort
+   * Wrapper method that recursively calls on its helper method
+   * Sorted in ascending order, as defined by compareTo
+   */
    public void mergeSort() {      
       mergeSort(cards, 0, topCard);
    }
-   
+  /**
+   * Helper method that recursively sorts the deck of cards
+   * @param arr array of cards being sorted
+   * @param left of the array; the starting index of the array to be sorted
+   * @param right of the array; the ending index of the array to be sorted
+   */
    public void mergeSort(Card[] arr, int left, int right) {
       if (left < right) {
          int mid = (left + right) / 2;    // find middle value
@@ -172,7 +215,13 @@ public class Deck {
          merge(arr, left, mid, right);    // merges two sides together
       }  
    }
-   
+  /**
+   * Merges smaller arrays into a single sorted array
+   * @param arr the array containing the cards needed to be merged
+   * @param left the starting index of the first smaller array
+   * @param mid the ending index of the first smaller array
+   * @param right the ending index of the second smaller array
+   */
    private void merge(Card[] arr, int left, int mid, int right) {
       Card[] temp = new Card[right - left + 1];
       int i = left;
@@ -208,7 +257,10 @@ public class Deck {
       }
       
    }
-   
+  /**
+   * Returns the index of the top card in the deck array
+   * @return the index of the top card
+   */
    public int getTopCard() {
       return topCard;
    }
