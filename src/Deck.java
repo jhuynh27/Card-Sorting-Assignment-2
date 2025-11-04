@@ -96,7 +96,7 @@ public class Deck {
       
       if (topCard == 51) {
          for (int r = 0; r < 13; r++) {
-            for (int s = 0; r < 4; r++) {
+            for (int s = 0; s < 4; s++) {
                int index = (13 * s) + r;  // finds what index of current card; multiples 13 by suit and adds rank; ace of diamonds = (13 * 1) + 1 = 14 
                result += cards[index].toString() + "\t";
             }
@@ -117,6 +117,9 @@ public class Deck {
    */
    @Override
    public boolean equals(Object other) {
+	  if (other == null || !(other instanceof Deck)) {
+		  return false;
+	  }
       Deck compare = (Deck) other;
       
       if (this.topCard != compare.topCard) {
@@ -139,6 +142,11 @@ public class Deck {
    public Deck[] deal(int hands, int cardsPerHand) {
    
       int cardsNeeded = hands * cardsPerHand;
+      
+      if (hands < 0) { // checks if there is an invalid number of hands
+    	  return null;
+      }
+      
       if (cardsNeeded > topCard + 1) { // checks if there is enough cards in the deck; returns null if not
          return null;
       }
@@ -148,6 +156,7 @@ public class Deck {
       for (int i = 0; i < hands; i++) {
          dealHands[i] = new Deck(); // create an empty array of decks for each hand
          dealHands[i].cards = new Card[cardsPerHand]; // gives each card for the hand a value
+         dealHands[i].topCard = cardsPerHand - 1;
          
          for (int j = 0; j < cardsPerHand; j++) {
             dealHands[i].cards[j] = this.cards[topCard]; // gives each hand number of cards needed
@@ -163,14 +172,17 @@ public class Deck {
    * @return the randomly selected and removed card.
    */
    public Card pick() {
-      int random = (int) (Math.random() * topCard + 1); // generate random number from cards
-      Card randomCard = cards[random]; // sets
+	  if (topCard < 0) {
+		  return null;
+	  }
+      int random = (int) (Math.random() * (topCard + 1)); // generate random number from cards
+      Card pickedCard = cards[random]; // sets randomCard
       
-      for (int i = random; i <= topCard; i++) {
-         cards[i] = cards[i + 1]; // shifts every card left starting at the random card picked
+      for (int i = random; i < topCard; i++) {
+         cards[i] = cards[i + 1]; // shifts every card left starting at the top card picked
       }
       topCard--; // removes card from deck
-      return randomCard; // returns card picked
+      return pickedCard; // returns card picked
    }
   /**
    * Sorts a deck of cards using Selection Sort
@@ -226,7 +238,7 @@ public class Deck {
       Card[] temp = new Card[right - left + 1];
       int i = left;
       int j = mid + 1;
-      int k = right;
+      int k = 0;
       
       while (i <= mid && j <= right) {
          if (arr[i].compareTo(arr[j]) <= 0) {
@@ -252,8 +264,8 @@ public class Deck {
          j++;
       }
       
-      for (k = left; k <= right; k++) {
-         arr[k] = temp[k];
+      for (k = 0; k < temp.length; k++) {
+         arr[left + k] = temp[k];
       }
       
    }

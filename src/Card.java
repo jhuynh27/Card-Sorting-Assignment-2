@@ -274,7 +274,9 @@ public class Card implements Comparable<Card> {
    */
    @Override
    public boolean equals(Object other) {
-           
+      if (other == null || !(other instanceof Card)) {
+    	  return false;
+      }
       Card otherCard = (Card) other;
       return this.suit == otherCard.getSuitInt() && this.rank == otherCard.getRank();
          

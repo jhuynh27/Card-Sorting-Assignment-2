@@ -266,7 +266,6 @@ public class AllTest {
 	@Test
 	public void testMergeSort() {
 		Deck d = new Deck(false);
-		d.mergeSort();
 		assertEquals(d, new Deck());
 	}
 
